@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Casa Mayorazgo — Ate, Lima</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gl:#f1d196;--gdim:rgba(201,169,110,0.13);--card:rgba(10,10,10,.91);--cream:#F5F0E8;--muted:rgba(245,240,232,.5)}
+html,body{min-height:100%;font-family:'Inter',sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;background:#0A0A0A}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(175deg,rgba(10,10,10,.2) 0%,rgba(10,10,10,.93) 58%),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80&auto=format&fit=crop') center/cover no-repeat;z-index:0}
+.hero-bg::after{content:'';position:absolute;top:0;right:18%;width:1px;height:100%;background:linear-gradient(to bottom,transparent 0%,#C9A96E 30%,#C9A96E 70%,transparent 100%);opacity:.25;transform:rotate(8deg) scaleY(1.3);transform-origin:top center}
+.brand{display:flex;align-items:center;gap:9px;position:absolute;top:26px;left:22px;z-index:10}
+.brand-mark{width:34px;height:34px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold)}
+.brand-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--cream)}
+.hero-content{position:relative;z-index:2;padding:26px 22px 0}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+.headline{font-family:'Playfair Display',serif;font-size:clamp(32px,8.5vw,46px);font-weight:700;line-height:1.09;color:var(--cream);margin-bottom:12px}
+.subline{font-size:13px;font-weight:300;line-height:1.6;color:var(--muted);max-width:320px;margin-bottom:16px}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:28px}
+.pill{display:flex;align-items:center;gap:5px;padding:5px 11px;border:1px solid rgba(201,169,110,0.28);border-radius:100px;font-size:11px;color:var(--gl);background:var(--gdim)}
+
+/* ── CARD (contenedor de todas las pantallas) ── */
+.card{background:var(--card);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(201,169,110,0.16);border-radius:14px 14px 0 0;padding:26px 22px 56px;position:relative;z-index:2}
+.card::before{content:'';display:block;width:34px;height:3px;background:rgba(201,169,110,0.38);border-radius:2px;margin:0 auto 22px}
+
+/* Social proof */
+.proof{display:flex;align-items:center;gap:9px;margin-bottom:18px;padding:9px 12px;background:rgba(201,169,110,0.08);border-radius:9px;border:1px solid rgba(201,169,110,0.14)}
+.avs{display:flex}
+.av{width:24px;height:24px;border-radius:50%;border:2px solid #0A0A0A;background:linear-gradient(135deg,#C9A96E,#8B6914);margin-left:-7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;color:#0A0A0A}
+.av:first-child{margin-left:0}
+.proof-txt{font-size:11px;color:var(--muted);line-height:1.4}
+.proof-txt strong{color:var(--gl);font-weight:500}
+
+/* Pantallas */
+.screen{display:none}
+.screen.active{display:block}
+
+/* Pantalla 1: Filtro precio */
+.filter-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--cream);text-align:center;margin-bottom:8px;line-height:1.3}
+.filter-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:22px;line-height:1.5}
+.price-badge{display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.price-badge span{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gl);background:var(--gdim);border:1px solid rgba(201,169,110,0.3);border-radius:10px;padding:10px 22px;letter-spacing:.5px}
+.filter-question{font-size:14px;color:var(--cream);text-align:center;margin-bottom:20px;line-height:1.5;font-weight:400}
+.choice-btns{display:flex;flex-direction:column;gap:10px}
+.btn-si{padding:15px;background:linear-gradient(135deg,#C9A96E 0%,#f1d196 50%,#C9A96E 100%);background-size:200% 200%;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0A0A0A;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(201,169,110,0.3);transition:transform .12s}
+.btn-si:active{transform:scale(.98)}
+.btn-no{padding:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:background .15s,border-color .15s}
+.btn-no:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+
+/* Pantalla 2: Formulario */
+.form-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--cream);margin-bottom:5px;text-align:center}
+.form-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.5}
+.form-sub span{color:var(--gold)}
+.field{margin-bottom:11px}
+.field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,169,110,0.2);border-radius:9px;padding:13px 15px;font-size:14px;font-family:'Inter',sans-serif;color:var(--cream);outline:none;transition:border-color .18s,background .18s;-webkit-appearance:none}
+.field input::placeholder{color:rgba(245,240,232,.25)}
+.field input:focus{border-color:var(--gold);background:rgba(201,169,110,0.06)}
+.err{font-size:10px;color:#e07070;margin-top:4px;display:none}
+.field.has-err input{border-color:#e07070}
+.field.has-err .err{display:block}
+.cta{width:100%;margin-top:18px;padding:15px;background:linear-gradient(135deg,#C9A96E 0%,#f1d196 50%,#C9A96E 100%);background-size:200% 200%;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0A0A0A;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 22px rgba(201,169,110,0.32);transition:transform .12s}
+.cta:active{transform:scale(.98)}
+.back-link{text-align:center;margin-top:12px;font-size:11px;color:var(--muted);cursor:pointer;text-decoration:underline}
+
+/* Pantalla 3: Éxito */
+.success-wrap{display:flex;flex-direction:column;align-items:center;gap:13px;padding:8px 0}
+.ok-icon{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;animation:pop .4s cubic-bezier(.175,.885,.32,1.275) forwards}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.ok-title{font-family:'Playfair Display',serif;font-size:21px;color:var(--cream);text-align:center}
+.ok-msg{font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+.wa-btn{margin-top:6px;padding:13px 26px;background:linear-gradient(135deg,#C9A96E,#f1d196);border:none;border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#0A0A0A;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 18px rgba(201,169,110,0.32)}
+.disclaimer{margin-top:13px;font-size:10px;color:var(--muted);text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="brand"><div class="brand-mark">P</div><span class="brand-name">Palazio</span></div>
+  <div class="hero-content">
+    <p class="eyebrow">Casa Mayorazgo · Ate, Lima</p>
+    <h1 class="headline">Casa de 4 pisos <br/> en Mayorazgo</h1>
+    <p class="subline">Urb. Mayorazgo, frente a Av. Javier Prado. Financiamiento bancario disponible.</p>
+    <div class="pills"><div class="pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>160 m² terreno</div><div class="pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>7 dormitorios</div><div class="pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 cochera</div><div class="pill"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>4 pisos</div></div>
+  </div>
+
+  <div class="card">
+    <!-- Social proof -->
+    <div class="proof">
+      <div class="avs"><div class="av">MR</div><div class="av">KL</div><div class="av">JP</div><div class="av">+</div></div>
+      <p class="proof-txt"><strong>+47 personas consultaron esta semana</strong></p>
+    </div>
+
+    <!-- PANTALLA 1: FILTRO PRECIO -->
+    <div class="screen active" id="s-filtro">
+      <p class="filter-question">Esta propiedad tiene un precio de $285,000. ¿Está dentro de tu presupuesto?</p>
+      <div class="choice-btns">
+        <button class="btn-si" onclick="goForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Sí, está dentro de mi presupuesto
+        </button>
+        <button class="btn-no" onclick="goNo()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          No, busco otro tipo de propiedad
+        </button>
+      </div>
+    </div>
+
+    <!-- PANTALLA 2: FORMULARIO -->
+    <div class="screen" id="s-form">
+      <h2 class="form-title">¡Excelente decisión!</h2>
+      <p class="form-sub">Déjanos tus datos y <span>Asesor Palazio</span> te contactará hoy</p>
+      <div class="field" id="fd-nombre">
+        <label for="i-nombre">Nombre completo</label>
+        <input type="text" id="i-nombre" placeholder="¿Cómo te llamas?" autocomplete="given-name"/>
+        <p class="err">Por favor ingresa tu nombre.</p>
+      </div>
+      <div class="field" id="fd-dni"><label for="i-dni">DNI</label><input type="text" id="i-dni" placeholder="12345678" inputmode="numeric" maxlength="8"/><p class="err">Ingresa tu DNI de 8 dígitos.</p></div>
+      <div class="field" id="fd-cel"><label for="i-cel">Celular / WhatsApp</label><input type="tel" id="i-cel" placeholder="9XX XXX XXX" inputmode="numeric" maxlength="9"/><p class="err">Ingresa un celular de 9 dígitos.</p></div>
+      <div class="field" id="fd-email"><label for="i-email">Correo electrónico</label><input type="email" id="i-email" placeholder="tucorreo@gmail.com"/><p class="err">Ingresa un correo válido.</p></div>
+      <button class="cta" onclick="submitForm()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        Enviar y contactar asesor
+      </button>
+      <p class="back-link" onclick="goFiltro()">← Volver</p>
+      <p class="disclaimer">Un asesor de Palazio te contactará vía WhatsApp. Sin spam.</p>
+    </div>
+
+    <!-- PANTALLA 3: ÉXITO -->
+    <div class="screen" id="s-ok">
+      <div class="success-wrap">
+        <div class="ok-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="ok-title">¡Listo, <span id="ok-nombre"></span>!</h3>
+        <p class="ok-msg">Tu solicitud fue recibida.<br/>Abriendo WhatsApp con Asesor Palazio…</p>
+        <button class="wa-btn" id="wa-btn-ok">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          Abrir WhatsApp
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /card -->
+</div><!-- /hero -->
+
+<script>
+const WA = '51993138662';
+const WA_MSG_SI = "Hola {asesor}, soy {nombre} (DNI: {dni}, Cel: {celular}, Email: {email}). Vi la propiedad {proyecto} en TikTok y me interesa. Mi presupuesto sí alcanza.";
+const WA_MSG_NO = "Hola, vi la propiedad Casa Mayorazgo en TikTok pero está fuera de mi presupuesto. ¿Qué otras opciones tienen disponibles?";
+const ASESOR = 'Asesor Palazio';
+const PROYECTO = 'Casa Mayorazgo';
+const SHOW_DNI   = true;
+const SHOW_CEL   = true;
+const SHOW_EMAIL = true;
+
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function goFiltro() { show('s-filtro'); }
+function goForm()   { show('s-form'); }
+function goNo() {
+  const msg = encodeURIComponent(WA_MSG_NO);
+  window.open('https://wa.me/' + WA + '?text=' + msg, '_blank');
+}
+
+if (SHOW_CEL) {
+  const celEl = document.getElementById('i-cel');
+  if (celEl) celEl.addEventListener('input', e => { e.target.value = e.target.value.replace(/D/g,'').slice(0,9); });
+}
+if (SHOW_DNI) {
+  const dniEl = document.getElementById('i-dni');
+  if (dniEl) dniEl.addEventListener('input', e => { e.target.value = e.target.value.replace(/D/g,'').slice(0,8); });
+}
+
+function validate() {
+  let ok = true;
+  const nombre = document.getElementById('i-nombre').value.trim();
+  const fn = document.getElementById('fd-nombre');
+  if (nombre.length < 2) { fn.classList.add('has-err'); ok = false; } else fn.classList.remove('has-err');
+  if (SHOW_DNI) {
+    const v = document.getElementById('i-dni').value.trim();
+    const fd = document.getElementById('fd-dni');
+    if (!/^d{8}$/.test(v)) { fd.classList.add('has-err'); ok = false; } else fd.classList.remove('has-err');
+  }
+  if (SHOW_CEL) {
+    const v = document.getElementById('i-cel').value.trim();
+    const fc = document.getElementById('fd-cel');
+    if (!/^9d{8}$/.test(v)) { fc.classList.add('has-err'); ok = false; } else fc.classList.remove('has-err');
+  }
+  if (SHOW_EMAIL) {
+    const v = document.getElementById('i-email').value.trim();
+    const fe = document.getElementById('fd-email');
+    if (!/^[^s@]+@[^s@]+.[^s@]+$/.test(v)) { fe.classList.add('has-err'); ok = false; } else fe.classList.remove('has-err');
+  }
+  return ok;
+}
+
+function submitForm() {
+  if (!validate()) return;
+  const nombre = document.getElementById('i-nombre').value.trim();
+  const dni    = SHOW_DNI   ? document.getElementById('i-dni').value.trim()   : 'N/A';
+  const cel    = SHOW_CEL   ? document.getElementById('i-cel').value.trim()   : 'N/A';
+  const email  = SHOW_EMAIL ? document.getElementById('i-email').value.trim() : 'N/A';
+
+  document.getElementById('ok-nombre').textContent = nombre.split(' ')[0];
+  show('s-ok');
+
+  const msg = encodeURIComponent(
+    WA_MSG_SI
+      .replace('{nombre}', nombre)
+      .replace('{dni}', dni)
+      .replace('{celular}', cel)
+      .replace('{email}', email)
+      .replace('{proyecto}', PROYECTO)
+      .replace('{asesor}', ASESOR)
+  );
+  const url = 'https://wa.me/' + WA + '?text=' + msg;
+  document.getElementById('wa-btn-ok').onclick = () => window.open(url, '_blank');
+  setTimeout(() => window.open(url, '_blank'), 2000);
+}
+</script>
+</body>
+</html>
